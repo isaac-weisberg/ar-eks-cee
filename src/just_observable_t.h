@@ -34,8 +34,7 @@ typedef struct { \
 just_observable_##EVENT_TYPE_NAME##_t just_observable_##EVENT_TYPE_NAME##_init(EVENT_TYPE_NAME value) { \
     just_observable_##EVENT_TYPE_NAME##_t observable; \
 \
-    observable.subscribe.ctx.captured = value; \
-    observable.subscribe.lambda = just_subscribe_closure_lambda_##EVENT_TYPE_NAME; \
+    observable.subscribe = just_subscribe_closure_##EVENT_TYPE_NAME##_t_init((just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t){ value }, just_subscribe_closure_lambda_##EVENT_TYPE_NAME); \
 \
     return observable; \
 } \
