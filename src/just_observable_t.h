@@ -9,34 +9,35 @@ void just_disposable() {
     
 }
 
-typedef struct {
-
-} just_handler_closure_ctx_int_t;
-
-CENERIC_CLOSURE(void, just_handler_closure_int_t, just_handler_closure_ctx_int_t, int)
-
-typedef struct {
-    int captured;
-} just_subscribe_closure_ctx_int_t;
-
-CENERIC_CLOSURE(just_disposable_t, just_subscribe_closure_int_t, just_subscribe_closure_ctx_int_t, just_handler_closure_int_t)
-
-just_disposable_t just_subscribe_closure_lambda_int(just_subscribe_closure_ctx_int_t* ctx, just_handler_closure_int_t handler) {
-    handler.lambda(&handler.ctx, ctx->captured);
-    return just_disposable;
-}
-
-typedef struct {
-    just_subscribe_closure_int_t subscribe;
-} just_observable_int_t;
-
-just_observable_int_t just_observable_int_init(int value) {
-    just_observable_int_t observable;
-
-    observable.subscribe.ctx.captured = value;
-    observable.subscribe.lambda = just_subscribe_closure_lambda_int;
-
-    return observable;
-}
+#define CENERIC_JUST_OBSERVABLE(EVENT_TYPE_NAME) \
+typedef struct { \
+\
+} just_handler_closure_ctx_##EVENT_TYPE_NAME##_t; \
+\
+CENERIC_CLOSURE(void, just_handler_closure_##EVENT_TYPE_NAME##_t, just_handler_closure_ctx_##EVENT_TYPE_NAME##_t, EVENT_TYPE_NAME) \
+\
+typedef struct { \
+    EVENT_TYPE_NAME captured; \
+} just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t; \
+\
+CENERIC_CLOSURE(just_disposable_t, just_subscribe_closure_##EVENT_TYPE_NAME##_t, just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t, just_handler_closure_##EVENT_TYPE_NAME##_t) \
+\
+just_disposable_t just_subscribe_closure_lambda_##EVENT_TYPE_NAME(just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t* ctx, just_handler_closure_##EVENT_TYPE_NAME##_t handler) { \
+    handler.lambda(&handler.ctx, ctx->captured); \
+    return just_disposable; \
+} \
+\
+typedef struct { \
+    just_subscribe_closure_##EVENT_TYPE_NAME##_t subscribe; \
+} just_observable_##EVENT_TYPE_NAME##_t; \
+\
+just_observable_##EVENT_TYPE_NAME##_t just_observable_##EVENT_TYPE_NAME##_init(EVENT_TYPE_NAME value) { \
+    just_observable_##EVENT_TYPE_NAME##_t observable; \
+\
+    observable.subscribe.ctx.captured = value; \
+    observable.subscribe.lambda = just_subscribe_closure_lambda_##EVENT_TYPE_NAME; \
+\
+    return observable; \
+} \
 
 #endif

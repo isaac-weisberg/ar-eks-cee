@@ -1,6 +1,8 @@
 #include "just_observable_t.h"
 #include "ceneric_closure.h"
 
+CENERIC_JUST_OBSERVABLE(int)
+
 void handleThemInts(just_handler_closure_ctx_int_t* ctx, int event) {
 
 }
