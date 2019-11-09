@@ -13,10 +13,10 @@ typedef struct {
     int captured;
 } just_subscribe_closure_ctx_t;
 
-typedef just_disposable_int_t (*just_subscribe_closure_lambda_t)(just_subscribe_closure_ctx_t, handler_int_t);
+typedef just_disposable_int_t (*just_subscribe_closure_lambda_t)(just_subscribe_closure_ctx_t*, handler_int_t);
 
-just_disposable_int_t just_subscribe_closure_lambda(just_subscribe_closure_ctx_t ctx, handler_int_t handler) {
-    handler(ctx.captured);
+just_disposable_int_t just_subscribe_closure_lambda(just_subscribe_closure_ctx_t* ctx, handler_int_t handler) {
+    handler(ctx->captured);
     return just_disposable_int;
 }
 
