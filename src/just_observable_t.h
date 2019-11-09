@@ -1,7 +1,14 @@
 #ifndef JUST_OBSERVABLE_T_H
 #define JUST_OBSERVABLE_T_H
 
-typedef void (*handler_int_t)(int);
+typedef struct {
+    
+} just_handler_closure_ctx_int_t;
+
+typedef struct {
+    just_handler_closure_ctx_int_t ctx;
+    void (*lambda)(just_handler_closure_ctx_int_t*, int);
+} just_handler_closure_int_t;
 
 typedef void (*just_disposable_int_t)(void);
 
@@ -11,17 +18,17 @@ void just_disposable_int() {
 
 typedef struct {
     int captured;
-} just_subscribe_closure_ctx_t;
+} just_subscribe_closure_ctx_int_t;
 
-typedef just_disposable_int_t (*just_subscribe_closure_lambda_t)(just_subscribe_closure_ctx_t*, handler_int_t);
+typedef just_disposable_int_t (*just_subscribe_closure_lambda_t)(just_subscribe_closure_ctx_int_t*, just_handler_closure_int_t);
 
-just_disposable_int_t just_subscribe_closure_lambda(just_subscribe_closure_ctx_t* ctx, handler_int_t handler) {
-    handler(ctx->captured);
+just_disposable_int_t just_subscribe_closure_lambda(just_subscribe_closure_ctx_int_t* ctx, just_handler_closure_int_t handler) {
+    handler.lambda(&handler.ctx, ctx->captured);
     return just_disposable_int;
 }
 
 typedef struct {
-    just_subscribe_closure_ctx_t ctx;
+    just_subscribe_closure_ctx_int_t ctx;
     just_subscribe_closure_lambda_t lambda;
 } just_subscribe_closure_t;
 
