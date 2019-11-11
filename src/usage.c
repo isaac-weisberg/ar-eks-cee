@@ -17,7 +17,8 @@ void usage() {
         handleThemInts
     );
 
-    call_just_subscribe_closure_int_t(observable.subscribe, handler);
+    just_disposable_t cancel = call_just_subscribe_closure_int_t(observable.subscribe, handler);
+    cancel();
 }
 
 // closure usage
