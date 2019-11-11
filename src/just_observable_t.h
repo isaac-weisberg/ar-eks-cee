@@ -23,7 +23,7 @@ typedef struct { \
 CENERIC_CLOSURE(just_disposable_t, just_subscribe_closure_##EVENT_TYPE_NAME##_t, just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t, just_handler_closure_##EVENT_TYPE_NAME##_t) \
 \
 just_disposable_t just_subscribe_closure_lambda_##EVENT_TYPE_NAME(just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t* ctx, just_handler_closure_##EVENT_TYPE_NAME##_t handler) { \
-    handler.lambda(&handler.ctx, ctx->captured); \
+    call_just_handler_closure_##EVENT_TYPE_NAME##_t(handler, ctx->captured); \
     return just_disposable; \
 } \
 \
