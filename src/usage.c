@@ -10,8 +10,10 @@ void handleThemInts(just_handler_closure_ctx_int_t* ctx, int event) {
 void usage() {
     just_observable_int_t observable = just_observable_int_init(4);
 
+    just_handler_closure_ctx_int_t ctx = {};
+
     just_handler_closure_int_t handler = just_handler_closure_int_t_init(
-        (just_handler_closure_ctx_int_t){}, 
+        ctx,
         handleThemInts
     );
 
