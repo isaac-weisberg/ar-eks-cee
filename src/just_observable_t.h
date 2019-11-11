@@ -58,7 +58,7 @@ just_observable_##EVENT_TYPE_NAME##_init( \
     just_observable_##EVENT_TYPE_NAME##_t observable; \
 \
     observable.subscribe = just_subscribe_closure_##EVENT_TYPE_NAME##_t_init( \
-        (just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t){ value }, \
+        (just_subscribe_closure_ctx_##EVENT_TYPE_NAME##_t){ .captured = value }, \
         just_subscribe_closure_lambda_##EVENT_TYPE_NAME); \
 \
     return observable; \
